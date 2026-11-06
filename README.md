@@ -74,6 +74,21 @@ After installation, run options.ps1 from the extracted repository folder:
 
 Startup is optional. GlazeWM and YASB are resident desktop tools while running; disable their startup shortcuts if you do not want them to launch automatically.
 
+
+## Optional THide taskbar utility
+
+The original setup used THide 0.1.3 (Windows x64 portable) to hide the Windows taskbar. It is intentionally separate from the main installer because it runs in the background when started.
+
+Official project and release:
+- https://github.com/amnweb/thide
+- https://github.com/amnweb/thide/releases/tag/v0.1.3
+
+After extracting the repository, run this from CMD if you want the same optional utility:
+
+    call extras\install-thide.cmd
+
+Then run thide.exe from the extracted Downloads folder. Its CLI supports start, hide, show, toggle, stop, enable-autostart, and disable-autostart. Autostart is optional; do not enable it unless you want THide to run after sign-in.
+
 ## Other scripts
 
 Run these from PowerShell in the repository folder:
