@@ -6,6 +6,11 @@ $RepoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Stamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $BackupRoot = Join-Path $env:USERPROFILE "Documents\LainOS-Backups\$Stamp"
 
+$OneDriveRoot = $env:OneDrive
+$OneDriveWallpapers = if ($OneDriveRoot) { Join-Path $OneDriveRoot "Imagens\wallpaper\themes\monochrome" } else { $null }
+$PicturesWallpapers = Join-Path $env:USERPROFILE "Pictures\Wallpapers"
+$WallpaperDir = if ($OneDriveWallpapers -and (Test-Path $OneDriveWallpapers)) { $OneDriveWallpapers } else { $PicturesWallpapers }
+
 $Targets = @(
     @{ Source = "configs\glazewm\config.yaml"; Destination = Join-Path $env:USERPROFILE ".glzr\glazewm\config.yaml"; Name = "GlazeWM" },
     @{ Source = "configs\kitty\kitty.conf"; Destination = Join-Path $env:USERPROFILE ".config\kitty\kitty.conf"; Name = "Kitty" },
@@ -17,6 +22,7 @@ $Targets = @(
 
 Write-Host "Preparing LainOS configuration..." -ForegroundColor Cyan
 New-Item -ItemType Directory -Force -Path $BackupRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $WallpaperDir | Out-Null
 
 foreach ($item in $Targets) {
     $sourcePath = Join-Path $RepoRoot $item.Source
@@ -31,23 +37,27 @@ foreach ($item in $Targets) {
     }
 
     $content = Get-Content -LiteralPath $sourcePath -Raw
+
     if ($item.Name -eq "Kitty") {
-        $wallpaper = Join-Path $env:USERPROFILE ".config\kitty\lain-room.jpg"
+        $kittyDir = Join-Path $env:USERPROFILE ".config\kitty"
+        $wallpaper = Join-Path $kittyDir "lain-room.jpg"
+        $bundledWallpaper = Join-Path $RepoRoot "assets\wallpapers\lain-room.jpg"
+        if ((Test-Path $bundledWallpaper) -and -not (Test-Path $wallpaper)) {
+            Copy-Item -LiteralPath $bundledWallpaper -Destination $wallpaper
+        }
         if (Test-Path $wallpaper) {
             $portablePath = $wallpaper -replace '\\','/'
-            $content = [regex]::Replace($content, '(?m)^background_image\s+.*$', "background_image $portablePath")
+            $content = [regex]::Replace($content, '(?m)^#?\s*background_image\s+.*$', "background_image $portablePath")
+            Write-Host "Kitty wallpaper configured." -ForegroundColor Green
         } else {
-            $content = [regex]::Replace($content, '(?m)^(background_image\s+.*)$', '# $1')
-            Write-Host "Kitty wallpaper not found; its wallpaper line was disabled." -ForegroundColor Yellow
+            $content = [regex]::Replace($content, '(?m)^\s*background_image\s+.*$', '# background_image disabled: add assets\wallpapers\lain-room.jpg')
+            Write-Host "Kitty wallpaper not bundled. Add lain-room.jpg to the Kitty config folder to enable it." -ForegroundColor Yellow
         }
     }
 
     if ($item.Name -eq "YASB config") {
-        $wallpaperDir = Join-Path $env:USERPROFILE "Pictures\Wallpapers"
-        New-Item -ItemType Directory -Force -Path $wallpaperDir | Out-Null
-        $yamlPath = $wallpaperDir -replace '\\','\\'
-        $content = [regex]::Replace($content, '(?m)^\s*image_path:\s*.*$',
-            ('      image_path: "' + $yamlPath + '"'))
+        $yamlPath = $WallpaperDir -replace '\\','\\'
+        $content = [regex]::Replace($content, '(?m)^\s*image_path:\s*.*$', ('      image_path: "' + $yamlPath + '"'))
     }
 
     Set-Content -LiteralPath $item.Destination -Value $content -Encoding UTF8
@@ -63,5 +73,6 @@ Use restore.ps1 from the LainOS repository to restore the newest backup.
 
 Write-Host ""
 Write-Host "Configuration applied." -ForegroundColor Green
+Write-Host "Wallpaper gallery folder: $WallpaperDir"
 Write-Host "Backup: $BackupRoot"
 Write-Host "No Windows services, security settings, installed apps, or system policies were changed."
