@@ -1,93 +1,99 @@
 # LainOS for Windows
 
-A dark, minimal Windows desktop rice inspired by Serial Experiments Lain and the idea of **Navi**: a navy-black interface, cyan accents, translucent surfaces, a tiling window manager, a custom top bar, and a clean terminal.
+A dark, minimal Windows desktop rice inspired by Serial Experiments Lain and the idea of **Navi**: navy-black surfaces, cyan accents, translucent YASB styling, GlazeWM tiling, Kitty, and a compact Fastfetch layout.
 
-LainOS includes an optional PowerShell installer that installs the core tools, applies the rice, and backs up existing configuration files first.
+This repository contains the configuration files and setup scripts used by the original LainOS Windows desktop. It includes a guided installer, keyboard shortcut reference, optional startup controls, and configuration backups.
 
-## Quick start
+## Install from CMD (no Git required)
 
-1. Download **Code → Download ZIP** from GitHub and extract it. Or clone it if Git is installed:
-    
-        git clone https://github.com/unfair1k/LainOS-Windows.git
-        cd LainOS-Windows
+Open **Command Prompt (CMD)** and paste this one line:
 
-2. Open PowerShell in the extracted repository folder.
-3. Run:
+    curl.exe -L "https://github.com/unfair1k/LainOS-Windows/archive/refs/heads/main.zip" -o "%TEMP%\LainOS-Windows.zip" && if exist "%TEMP%\LainOS-Windows-main" rmdir /s /q "%TEMP%\LainOS-Windows-main" && tar.exe -xf "%TEMP%\LainOS-Windows.zip" -C "%TEMP%" && call "%TEMP%\LainOS-Windows-main\install.cmd"
 
-        Set-ExecutionPolicy -Scope Process Bypass -Force
-        .\install.ps1
+The ZIP is downloaded from this public repository, extracted into your temporary folder, and the CMD installer starts. No Git installation or manual file editing is required. The installer uses PowerShell internally to safely copy configuration files and run WinGet; the user-facing launch is through CMD.
 
-4. Review the package prompt. WinGet installs GlazeWM, YASB, Fastfetch, and JetBrainsMono Nerd Font.
-5. Restart GlazeWM and YASB. Install your preferred Win-Kitty build separately, then open Kitty and run fastfetch.
+The installer asks before installing:
+- GlazeWM (glzr-io.glazewm)
+- YASB (AmN.yasb)
+- Fastfetch (Fastfetch-cli.Fastfetch)
+- JetBrainsMono Nerd Font (DEVCOM.JetBrainsMonoNerdFont)
 
-The installer does not need Administrator rights for the configuration-copy step. WinGet may request elevation depending on the package installer and Windows setup.
+Review the prompts before accepting. WinGet may request elevation for individual packages.
 
-## Installer scripts
+## What is included
 
-| Script | Purpose |
-|---|---|
-| install.ps1 | Installs core applications with WinGet, then applies the configuration |
-| setup.ps1 | Backs up existing config files and copies the LainOS rice |
-| restore.ps1 | Restores the most recent backup (or a selected snapshot) |
-| options.ps1 | Enables or disables GlazeWM/YASB startup shortcuts |
+- GlazeWM configuration with 9 workspaces, tiling, window navigation, movement, resizing, and keyboard shortcuts.
+- YASB configuration with a translucent dark bar, workspaces, taskbar, clock, audio, media, system tray, wallpaper gallery, and system widgets.
+- YASB CSS and the LainOS cyan/navy palette.
+- Win-Kitty configuration with transparency, JetBrainsMono Nerd Font, tabs, and keyboard shortcuts.
+- Fastfetch configuration with the LainOS logo and the Navi OS label.
+- Backup, restore, and optional startup shortcut scripts.
+- English installation, security, and keyboard shortcut documentation.
 
-Install applications only:
+## Design palette
 
-    .\install.ps1 -SkipApplications
+- Background: #0b0e17
+- Foreground: #c8d5f0
+- Cyan accent: #00e5ff
+- Secondary navy: #101b2b
 
-Apply configs only:
+## Repository layout
+
+    assets/wallpapers/       Wallpaper instructions
+    configs/                 GlazeWM, YASB, Kitty, Fastfetch
+    docs/                    Install, security, keyboard shortcuts
+    install.cmd              CMD entry point
+    install.ps1              WinGet installer
+    setup.ps1                Backup and apply configuration
+    restore.ps1              Restore previous configuration
+    options.ps1              Enable/disable startup shortcuts
+
+## Wallpapers
+
+The original Kitty image was named lain-room.jpg and was stored at:
+
+    %USERPROFILE%\.config\kitty\lain-room.jpg
+
+That original image was not present in the repository or available for redistribution, so it is not included. To use it, copy your own licensed lain-room.jpg into that folder, or place it at assets\wallpapers\lain-room.jpg before running setup.
+
+For the YASB wallpaper gallery, the installer prefers the original OneDrive folder if it exists:
+
+    %OneDrive%\Imagens\wallpaper\themes\monochrome
+
+Otherwise it uses:
+
+    %USERPROFILE%\Pictures\Wallpapers
+
+Add your wallpaper images to the selected folder. The YASB config is updated automatically to use that path.
+
+## Optional startup shortcuts
+
+After installation, run options.ps1 from the extracted repository folder:
+- Option 1 creates GlazeWM and YASB shortcuts in the Windows Startup folder.
+- Option 2 removes those shortcuts.
+
+Startup is optional. GlazeWM and YASB are resident desktop tools while running; disable their startup shortcuts if you do not want them to launch automatically.
+
+## Other scripts
+
+Run these from PowerShell in the repository folder:
 
     .\setup.ps1
-
-Manage startup:
-
+    .\restore.ps1
     .\options.ps1
 
-Restore the newest backup:
-
-    .\restore.ps1
-
-Backups are stored under Documents\LainOS-Backups. Restore returns configuration files only; it does not uninstall applications.
-
-## Design
-
-- **Palette:** deep navy #0b0e17, pale blue text #c8d5f0, cyan accent #00e5ff
-- **Window manager:** GlazeWM
-- **Status bar:** YASB
-- **Terminal:** Win-Kitty
-- **System information:** Fastfetch
-- **Taskbar:** THide (optional, manual only)
-
-## Layout
-
-    configs/
-      fastfetch/config.jsonc
-      glazewm/config.yaml
-      kitty/kitty.conf
-      yasb/config.yaml
-      yasb/styles.css
-      yasb/yasb_colors.css
-    docs/
-      INSTALL.md
-      KEYBINDINGS.md
-      SECURITY.md
-    install.ps1
-    setup.ps1
-    restore.ps1
-    options.ps1
-
-## Important notes
-
-- Win-Kitty is not installed automatically because this setup uses a specific Windows build. Install it separately.
-- The Kitty wallpaper is optional. If %USERPROFILE%\.config\kitty\lain-room.jpg is absent, setup disables the wallpaper directive instead of leaving a broken path.
-- The YASB wallpaper gallery is pointed to %USERPROFILE%\Pictures\Wallpapers; add your own images there.
-- THide is not bundled or enabled by the installer. Hiding the taskbar is optional and can make recovery harder.
-- Wallpapers, fonts, and third-party executables are not redistributed by this repository.
+Backups are stored in Documents\LainOS-Backups. Restore returns previous configuration files; it does not uninstall applications.
 
 ## Safety
 
-LainOS is a desktop customization project, not a Windows debloater. Its scripts do not remove built-in apps, disable services, change Defender, disable Windows Update, edit security policies, or apply registry tweaks. Read docs/SECURITY.md before running scripts.
+LainOS is a desktop customization project, not a Windows debloater. Its scripts do not remove built-in apps, disable services, change Microsoft Defender, disable Windows Update, or modify security policies. Read docs/SECURITY.md before running scripts.
 
-## Credits
+## Third-party projects
 
-This rice combines configuration for third-party projects. Their software and assets remain the property of their respective authors. See docs/INSTALL.md for upstream links.
+- GlazeWM: https://github.com/glzr-io/glazewm
+- YASB: https://github.com/amnweb/yasb
+- Kitty: https://github.com/kovidgoyal/kitty
+- Fastfetch: https://github.com/fastfetch-cli/fastfetch
+- JetBrainsMono Nerd Font: https://www.nerdfonts.com/font-downloads
+
+LainOS is an independent configuration project and is not affiliated with these projects.
