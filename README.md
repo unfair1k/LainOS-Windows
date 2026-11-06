@@ -119,7 +119,8 @@ LainOS is a desktop customization project, not a Windows debloater. Its scripts 
 
 - GlazeWM: https://github.com/glzr-io/glazewm
 - YASB: https://github.com/amnweb/yasb
-- Kitty: https://github.com/kovidgoyal/kitty
+- Win-Kitty (Windows port used by this setup): https://github.com/ecstra/win-kitty
+- Kitty upstream: https://github.com/kovidgoyal/kitty
 - Fastfetch: https://github.com/fastfetch-cli/fastfetch
 - JetBrainsMono Nerd Font: https://www.nerdfonts.com/font-downloads
 
