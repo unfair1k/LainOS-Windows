@@ -1,0 +1,21 @@
+/* LainOS accent palette for YASB */
+:root {
+    --yasb-accent: rgb(0, 229, 255);
+    --yasb-accent-rgb: 0, 229, 255;
+    --yasb-accent-dark1: rgb(0, 190, 220);
+    --yasb-accent-dark1-rgb: 0, 190, 220;
+    --yasb-accent-dark2: rgb(0, 150, 180);
+    --yasb-accent-dark2-rgb: 0, 150, 180;
+    --yasb-accent-dark3: rgb(0, 105, 135);
+    --yasb-accent-dark3-rgb: 0, 105, 135;
+    --yasb-accent-light1: rgb(70, 235, 255);
+    --yasb-accent-light1-rgb: 70, 235, 255;
+    --yasb-accent-light2: rgb(125, 242, 255);
+    --yasb-accent-light2-rgb: 125, 242, 255;
+    --yasb-accent-light3: rgb(185, 249, 255);
+    --yasb-accent-light3-rgb: 185, 249, 255;
+    --yasb-background: rgb(8, 14, 27);
+    --yasb-background-rgb: 8, 14, 27;
+    --yasb-foreground: rgb(200, 213, 240);
+    --yasb-foreground-rgb: 200, 213, 240;
+}
