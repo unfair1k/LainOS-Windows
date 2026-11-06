@@ -37,7 +37,7 @@ The bindings below are taken from the included GlazeWM configuration.
 | Reset font size | `Ctrl + 0` |
 | Toggle fullscreen | `Ctrl + Shift + F` |
 
-`Alt + Space` is intentionally not bound by GlazeWM in this config; it is reserved for Flow Launcher.
+`Alt + Space` is not bound by GlazeWM; the included YASB config assigns it to the YASB quick launcher.
 
 ## YASB shortcuts
 
