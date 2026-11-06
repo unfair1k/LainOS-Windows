@@ -38,3 +38,12 @@ The bindings below are taken from the included GlazeWM configuration.
 | Toggle fullscreen | `Ctrl + Shift + F` |
 
 `Alt + Space` is intentionally not bound by GlazeWM in this config; it is reserved for Flow Launcher.
+
+## YASB shortcuts
+
+| Action | Shortcut |
+|---|---|
+| Open YASB quick launcher | `Alt + Space` |
+| Open wallpaper gallery | `Ctrl + Alt + W` |
+
+These shortcuts work while YASB is running. If another application uses the same shortcut, change one of the bindings in the YASB configuration.
