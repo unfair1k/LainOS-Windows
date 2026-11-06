@@ -18,7 +18,7 @@ The installer asks before installing:
 - Fastfetch (Fastfetch-cli.Fastfetch)
 - JetBrainsMono Nerd Font (DEVCOM.JetBrainsMonoNerdFont)
 
-Review the prompts before accepting. WinGet may request elevation for individual packages.
+Review the prompts before accepting. WinGet may request elevation for individual packages. At the end, the CMD installer also offers an optional download of THide 0.1.3; it does not enable THide autostart.
 
 ## What is included
 
