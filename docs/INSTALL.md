@@ -6,7 +6,7 @@ No Git installation is required. Open Command Prompt and run:
 
     curl.exe -L "https://github.com/unfair1k/LainOS-Windows/archive/refs/heads/main.zip" -o "%TEMP%\LainOS-Windows.zip" && if exist "%TEMP%\LainOS-Windows-main" rmdir /s /q "%TEMP%\LainOS-Windows-main" && tar.exe -xf "%TEMP%\LainOS-Windows.zip" -C "%TEMP%" && call "%TEMP%\LainOS-Windows-main\install.cmd"
 
-This downloads the public repository ZIP, extracts it, and starts the CMD installer. The installer invokes PowerShell internally for configuration and WinGet operations.
+This downloads the public repository ZIP, extracts it, and starts the CMD installer. The installer invokes PowerShell internally for configuration and WinGet operations. At the end, it offers to download optional THide 0.1.3; it does not enable THide autostart.
 
 ## What is installed
 
