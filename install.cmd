@@ -31,5 +31,12 @@ if not "%INSTALL_EXIT%"=="0" (
 echo LainOS setup finished.
 echo Restart GlazeWM and YASB after installation.
 echo Kitty must be installed separately.
+echo.
+choice /C YN /M "Download optional THide 0.1.3 portable taskbar utility"
+if errorlevel 2 goto :finished
+call "%~dp0extras\install-thide.cmd"
+:finished
+echo.
+echo LainOS installation flow completed.
 pause
 exit /b 0
