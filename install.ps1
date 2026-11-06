@@ -39,7 +39,6 @@ if (-not $SkipApplications) {
 Write-Host ""
 Write-Host "== Applying configuration ==" -ForegroundColor Cyan
 & (Join-Path $RepoRoot "setup.ps1")
-if ($LASTEXITCODE -ne 0) { throw "Configuration setup failed. Review the error above." }
 
 Write-Host ""
 Write-Host "Finished. Restart GlazeWM and YASB, then open Kitty and run: fastfetch" -ForegroundColor Green
