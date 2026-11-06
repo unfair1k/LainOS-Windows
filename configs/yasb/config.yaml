@@ -39,16 +39,13 @@ bars:
       - lines
       - glazewm_workspaces
       - lines
-      - glazewm_tiling_direction
-      - lines
       - taskbar
       right:
       - audio_visualizer
       - media
-      #- lines
-      #- cpu
-      #- lines
-      #- memory
+      - cpu
+      - lines
+      - memory
       - lines
       - volume
       - lines
@@ -214,19 +211,18 @@ widgets:
       hide_if_offline: false
       monitor_exclusive: true
       enable_scroll_switching: true
+      populated_label: "{name}"
+      empty_label: "{name}"
+      active_populated_label: "{name}"
+      active_empty_label: "{name}"
       app_icons:
         enabled_populated: false
         enabled_active: false
-        size: 16
+        size: 12
         max_icons: 0
         hide_label: false
         hide_duplicates: false
         hide_floating: false
-  glazewm_tiling_direction:
-    type: "glazewm.tiling_direction.GlazewmTilingDirectionWidget"
-    options:
-      horizontal_label: "⇔"
-      vertical_label: "⇕"
   systray:
     type: "yasb.systray.SystrayWidget"
     options:
