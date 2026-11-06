@@ -90,3 +90,10 @@ THide 0.1.3 was used as an optional portable taskbar-hiding utility, but it is n
 - Kitty: https://github.com/kovidgoyal/kitty
 - Fastfetch: https://github.com/fastfetch-cli/fastfetch
 - JetBrainsMono Nerd Font: https://www.nerdfonts.com/font-downloads
+
+
+## Recorded versions and validation
+
+The original desktop used GlazeWM 3.10.1, Win-Kitty 0.48.0, and optional THide 0.1.3. Kitty and THide are not installed by this repository. Exact YASB and Fastfetch versions were not recorded.
+
+The scripts have not yet been validated on a clean Windows installation. Review them before use.
