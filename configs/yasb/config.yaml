@@ -37,9 +37,9 @@ bars:
       left:
       - home
       - lines
-      - komorebi_workspaces
+      - glazewm_workspaces
       - lines
-      - komorebi_active_layout
+      - glazewm_tiling_direction
       - lines
       - taskbar
       right:
@@ -207,64 +207,26 @@ widgets:
       class_name: "separator-widget"
       callbacks:
         on_left: "do_nothing"
-  komorebi_workspaces:
-    type: "komorebi.workspaces.WorkspaceWidget"
+  glazewm_workspaces:
+    type: "glazewm.workspaces.GlazewmWorkspacesWidget"
     options:
-      label_offline: "Komorebi Offline"
-      label_workspace_btn: "{index}"
-      label_workspace_active_btn: "{index}"
-      label_workspace_populated_btn: "{index}"
-      label_default_name: ""
-      label_zero_index: false
-      hide_empty_workspaces: true
+      offline_label: "GlazeWM Offline"
       hide_if_offline: false
-      toggle_workspace_layer:
-        enabled: false
-        tiling_label: "Tiling"
-        floating_label: "Floating"
-      app_icons: 
+      monitor_exclusive: true
+      enable_scroll_switching: true
+      app_icons:
         enabled_populated: false
         enabled_active: false
-        size: 12
+        size: 16
         max_icons: 0
         hide_label: false
         hide_duplicates: false
         hide_floating: false
-  komorebi_active_layout:
-    type: "komorebi.active_layout.ActiveLayoutWidget"
+  glazewm_tiling_direction:
+    type: "glazewm.tiling_direction.GlazewmTilingDirectionWidget"
     options:
-      hide_if_offline: true
-      label: "{layout_name}"
-      layouts: ['bsp', 'columns', 'rows', 'grid', 'vertical_stack', 'horizontal_stack', 'ultrawide_vertical_stack','right_main_vertical_stack']
-      layout_icons:
-        bsp: "\uebeb"
-        columns: "\uebf7"
-        rows: "\uec01"
-        grid: "\udb81\udf58"
-        scrolling: "\uebf7"
-        vertical_stack: "\uebee"
-        horizontal_stack: "\uebf0"
-        ultrawide_vertical_stack: "\uebee"
-        right_main_vertical_stack: "\uebf1"
-        monocle: "\uf06f"
-        maximized: "\uf06f"
-        floating: "\uf2d2"
-        paused: "\udb83\udf89"
-        tiling: "\udb81\ude40"
-      callbacks:
-        on_left: 'toggle_layout_menu'
-        on_middle: 'next_layout'
-        on_right: 'prev_layout'
-      layout_menu:
-        blur: true
-        round_corners: true
-        round_corners_type: "normal"
-        border_color: "System"
-        alignment: "left"
-        direction: "up"
-        offset_top: 6
-        offset_left: 0
-        show_layout_icons: true
+      horizontal_label: "⇔"
+      vertical_label: "⇕"
   systray:
     type: "yasb.systray.SystrayWidget"
     options:
