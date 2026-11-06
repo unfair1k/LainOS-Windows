@@ -172,8 +172,7 @@ keybindings:
   - commands: ['toggle-tiling-direction']
     bindings: ['alt+v']
 
-  # Alt+Space is reserved for Flow Launcher.
-  # Set Alt+Space as Flow Launcher's hotkey in Flow Launcher settings.
+  # Alt+Space is not bound by GlazeWM; the included YASB config uses it for quick launch.
 
   - commands: ['toggle-floating --centered']
     bindings: ['alt+shift+space']
