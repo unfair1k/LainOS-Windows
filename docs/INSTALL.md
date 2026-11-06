@@ -1,33 +1,27 @@
 # Installation
 
-LainOS includes PowerShell scripts for a guided setup. They install only the listed desktop tools and copy the repository's configuration files after creating a backup.
+## Quick install from CMD
 
-## 1. Get the repository
+No Git installation is required. Open Command Prompt and run:
 
-Download **Code → Download ZIP** from GitHub and extract it, or clone it if Git is already installed:
+    curl.exe -L "https://github.com/unfair1k/LainOS-Windows/archive/refs/heads/main.zip" -o "%TEMP%\LainOS-Windows.zip" && if exist "%TEMP%\LainOS-Windows-main" rmdir /s /q "%TEMP%\LainOS-Windows-main" && tar.exe -xf "%TEMP%\LainOS-Windows.zip" -C "%TEMP%" && call "%TEMP%\LainOS-Windows-main\install.cmd"
 
-    git clone https://github.com/unfair1k/LainOS-Windows.git
-    cd LainOS-Windows
+This downloads the public repository ZIP, extracts it, and starts the CMD installer. The installer invokes PowerShell internally for configuration and WinGet operations.
 
-Open PowerShell in the extracted folder.
+## What is installed
 
-## 2. Run the installer
-
-    Set-ExecutionPolicy -Scope Process Bypass -Force
-    .\install.ps1
-
-The execution-policy change applies only to the current PowerShell process. The installer asks before installing these WinGet packages:
+The installer asks before installing these WinGet packages:
 
 - GlazeWM — glzr-io.glazewm
 - YASB — AmN.yasb
 - Fastfetch — Fastfetch-cli.Fastfetch
 - JetBrainsMono Nerd Font — DEVCOM.JetBrainsMonoNerdFont
 
-WinGet may request elevation for an individual package, depending on its installer and Windows configuration. Review any installer prompts.
+WinGet may request elevation for an individual package. Review prompts before accepting.
 
-Win-Kitty is not installed automatically. This rice uses a specific Windows build; install your preferred compatible Win-Kitty build separately.
+Win-Kitty is not installed automatically. This setup uses a specific Windows build; install a compatible Win-Kitty build separately.
 
-## 3. What setup changes
+## What setup changes
 
 The setup script copies the repository configs to:
 
@@ -40,44 +34,53 @@ The setup script copies the repository configs to:
 | configs/yasb/styles.css | %USERPROFILE%\.config\yasb\styles.css |
 | configs/yasb/yasb_colors.css | %USERPROFILE%\.config\yasb\yasb_colors.css |
 
-Existing files are backed up before replacement to Documents\LainOS-Backups\<timestamp>\.
+Existing configuration files are backed up to Documents\LainOS-Backups\<timestamp> before replacement.
 
-Machine-specific wallpaper paths are handled safely:
-- If %USERPROFILE%\.config\kitty\lain-room.jpg exists, Kitty is pointed to it. Otherwise, the Kitty wallpaper directive is commented out.
-- YASB's wallpaper gallery is pointed to %USERPROFILE%\Pictures\Wallpapers, which setup creates if needed.
+## Wallpapers
 
-## 4. Optional startup
+The original Kitty wallpaper was named lain-room.jpg. It is not included because the original image was not available in the repository for redistribution.
 
-Run:
+To use it, copy your own image to:
 
-    .\options.ps1
+    %USERPROFILE%\.config\kitty\lain-room.jpg
 
-Choose option 1 to create GlazeWM and YASB shortcuts in the current user's Startup folder, or option 2 to remove those shortcuts. If an executable cannot be located automatically, start that app manually or configure its startup entry yourself.
+Or put it in assets\wallpapers\lain-room.jpg before setup. The setup script copies it into Kitty's config folder if no local copy exists.
 
-## 5. Restore your previous configuration
+For the YASB wallpaper gallery, setup prefers:
+
+    %OneDrive%\Imagens\wallpaper\themes\monochrome
+
+when that folder exists. Otherwise it creates and uses:
+
+    %USERPROFILE%\Pictures\Wallpapers
+
+Add your wallpaper files to the selected directory.
+
+## Optional startup shortcuts
+
+Run options.ps1 from the extracted repository folder:
+- Option 1 creates GlazeWM and YASB shortcuts in the current user's Startup folder.
+- Option 2 removes those shortcuts.
+
+## Restore
 
 Run:
 
     .\restore.ps1
 
-The script selects the newest backup and asks for confirmation. To choose a specific snapshot:
+The script selects the newest backup and asks for confirmation. Restore returns files that existed before setup. It does not uninstall applications or remove newly created config files that had no previous version.
 
-    .\restore.ps1 -BackupPath "$env:USERPROFILE\Documents\LainOS-Backups\20261106-120000"
+## Optional taskbar hiding
 
-Restore returns files that existed before setup. It does not uninstall applications or remove newly created config files that had no previous version.
-
-## 6. Optional taskbar hiding
-
-THide is not included, downloaded, or enabled by these scripts. It is a separate optional customization. Verify its original source and test its recovery method before using it.
+THide 0.1.3 was used as an optional portable taskbar-hiding utility, but it is not bundled or installed by this repository. Verify its source and recovery method before using it.
 
 ## Troubleshooting
 
-- **WinGet not found:** install or update App Installer from Microsoft Store.
-- **Kitty wallpaper missing:** place your own image at %USERPROFILE%\.config\kitty\lain-room.jpg and uncomment/update the background_image directive.
-- **YASB wallpaper gallery empty:** add supported images to %USERPROFILE%\Pictures\Wallpapers.
-- **YASB widget error:** check widget names and options against the current YASB documentation.
-- **GlazeWM shortcut does nothing:** confirm GlazeWM is running and check for conflicting hotkeys.
-- **Font looks wrong:** confirm JetBrainsMono Nerd Font is installed and restart the terminal.
+- WinGet not found: install or update App Installer from Microsoft Store.
+- Kitty wallpaper missing: place lain-room.jpg in Kitty's config folder.
+- YASB wallpaper gallery empty: add supported images to the selected wallpaper directory.
+- GlazeWM shortcut does nothing: confirm GlazeWM is running and check for hotkey conflicts.
+- Font looks wrong: confirm JetBrainsMono Nerd Font is installed and restart Kitty.
 
 ## Official project links
 
