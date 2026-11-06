@@ -84,6 +84,18 @@ Run these from PowerShell in the repository folder:
 
 Backups are stored in Documents\LainOS-Backups. Restore returns previous configuration files; it does not uninstall applications.
 
+
+## Original setup versions
+
+Recorded versions from the original desktop:
+- GlazeWM 3.10.1
+- Win-Kitty 0.48.0 (installed separately; not distributed here)
+- THide 0.1.3 (optional portable utility; not distributed or installed here)
+- JetBrainsMono Nerd Font
+- YASB and Fastfetch (the exact installed versions were not recorded)
+
+The repository scripts have not yet been validated on a clean Windows installation. Review the scripts and prompts before using them on another PC.
+
 ## Safety
 
 LainOS is a desktop customization project, not a Windows debloater. Its scripts do not remove built-in apps, disable services, change Microsoft Defender, disable Windows Update, or modify security policies. Read docs/SECURITY.md before running scripts.
