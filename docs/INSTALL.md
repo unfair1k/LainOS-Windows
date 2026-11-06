@@ -97,3 +97,26 @@ THide 0.1.3 was used as an optional portable taskbar-hiding utility, but it is n
 The original desktop used GlazeWM 3.10.1, Win-Kitty 0.48.0, and optional THide 0.1.3. Kitty and THide are not installed by this repository. Exact YASB and Fastfetch versions were not recorded.
 
 The scripts have not yet been validated on a clean Windows installation. Review them before use.
+
+
+## Optional THide taskbar utility
+
+The original setup used THide 0.1.3 (Windows x64 portable). It is not installed by the main installer because it runs in the background while active.
+
+Official release: https://github.com/amnweb/thide/releases/tag/v0.1.3
+
+From CMD in the extracted repository folder, run:
+
+    call extras\install-thide.cmd
+
+The script downloads the official portable ZIP and extracts it under Downloads. Start it manually with thide.exe. Optional CLI commands include:
+
+    thide.exe start
+    thide.exe hide
+    thide.exe show
+    thide.exe toggle
+    thide.exe stop
+    thide.exe enable-autostart
+    thide.exe disable-autostart
+
+Enabling autostart makes THide launch at sign-in. This is optional and is not done by LainOS setup.
