@@ -1,65 +1,89 @@
 # Installation
 
-These steps describe the components used by this rice. Install each project from its official source and check its own documentation for current Windows requirements.
+LainOS includes PowerShell scripts for a guided setup. They install only the listed desktop tools and copy the repository's configuration files after creating a backup.
 
-## 1. Install the applications
+## 1. Get the repository
 
-- **GlazeWM:** https://github.com/glzr-io/glazewm
-- **YASB:** https://github.com/amnweb/yasb
-- **Kitty:** https://github.com/kovidgoyal/kitty (this setup was used with a Windows build)
-- **Fastfetch:** https://github.com/fastfetch-cli/fastfetch
-- **JetBrainsMono Nerd Font:** https://www.nerdfonts.com/font-downloads
-- **THide (optional):** use the original project/release source you have verified; do not download repacks from unofficial sites.
+Download **Code → Download ZIP** from GitHub and extract it, or clone it if Git is already installed:
 
-The saved YASB config includes widgets for audio visualization, media, system tray, notifications, wallpapers, and control center. If a widget is unavailable in your installed YASB version, consult the YASB wiki and disable or replace that widget.
+    git clone https://github.com/unfair1k/LainOS-Windows.git
+    cd LainOS-Windows
 
-## 2. Back up existing configurations
+Open PowerShell in the extracted folder.
 
-Before replacing anything, copy your current folders somewhere safe:
+## 2. Run the installer
 
-- `%USERPROFILE%\.glzr\glazewm\`
-- `%USERPROFILE%\.config\kitty\`
-- `%USERPROFILE%\.config\fastfetch\`
-- YASB's configuration directory (open YASB settings or its tray menu to locate it)
+    Set-ExecutionPolicy -Scope Process Bypass -Force
+    .\install.ps1
 
-## 3. Copy the configuration files
+The execution-policy change applies only to the current PowerShell process. The installer asks before installing these WinGet packages:
+
+- GlazeWM — glzr-io.glazewm
+- YASB — AmN.yasb
+- Fastfetch — Fastfetch-cli.Fastfetch
+- JetBrainsMono Nerd Font — DEVCOM.JetBrainsMonoNerdFont
+
+WinGet may request elevation for an individual package, depending on its installer and Windows configuration. Review any installer prompts.
+
+Win-Kitty is not installed automatically. This rice uses a specific Windows build; install your preferred compatible Win-Kitty build separately.
+
+## 3. What setup changes
+
+The setup script copies the repository configs to:
 
 | Repository file | Destination |
 |---|---|
-| `configs/glazewm/config.yaml` | `%USERPROFILE%\.glzr\glazewm\config.yaml` |
-| `configs/kitty/kitty.conf` | `%USERPROFILE%\.config\kitty\kitty.conf` |
-| `configs/fastfetch/config.jsonc` | `%USERPROFILE%\.config\fastfetch\config.jsonc` |
-| `configs/yasb/config.yaml` | YASB config directory, usually `config.yaml` |
-| `configs/yasb/styles.css` | YASB config directory, usually `styles.css` |
-| `configs/yasb/yasb_colors.css` | YASB config directory, usually `yasb_colors.css` |
+| configs/glazewm/config.yaml | %USERPROFILE%\.glzr\glazewm\config.yaml |
+| configs/kitty/kitty.conf | %USERPROFILE%\.config\kitty\kitty.conf |
+| configs/fastfetch/config.jsonc | %USERPROFILE%\.config\fastfetch\config.jsonc |
+| configs/yasb/config.yaml | %USERPROFILE%\.config\yasb\config.yaml |
+| configs/yasb/styles.css | %USERPROFILE%\.config\yasb\styles.css |
+| configs/yasb/yasb_colors.css | %USERPROFILE%\.config\yasb\yasb_colors.css |
 
-Back up existing files before replacing them.
+Existing files are backed up before replacement to Documents\LainOS-Backups\<timestamp>\.
 
-## 4. Fix local paths
+Machine-specific wallpaper paths are handled safely:
+- If %USERPROFILE%\.config\kitty\lain-room.jpg exists, Kitty is pointed to it. Otherwise, the Kitty wallpaper directive is commented out.
+- YASB's wallpaper gallery is pointed to %USERPROFILE%\Pictures\Wallpapers, which setup creates if needed.
 
-The saved YASB wallpaper widget and Kitty wallpaper reference paths belong to the original author's PC. Change them to paths that exist on your computer.
+## 4. Optional startup
 
-- In YASB `config.yaml`, update the `wallpapers.options.image_path` value.
-- In Kitty `kitty.conf`, update or remove `background_image`, `background_image_layout`, and `background_image_linear`.
+Run:
 
-The repository does not redistribute the author's wallpaper image. Add a wallpaper you are allowed to use in your own folder.
+    .\options.ps1
 
-## 5. Start and verify
+Choose option 1 to create GlazeWM and YASB shortcuts in the current user's Startup folder, or option 2 to remove those shortcuts. If an executable cannot be located automatically, start that app manually or configure its startup entry yourself.
 
-1. Start GlazeWM and verify that windows tile and keybindings work.
-2. Start YASB and confirm the top bar appears.
-3. Open Kitty and check the font, colors, wallpaper path, and opacity.
-4. Run `fastfetch` in Kitty.
-5. After everything works, configure apps to launch at sign-in using Windows Startup Apps or the Startup folder.
+## 5. Restore your previous configuration
 
-## 6. Optional: hide the Windows taskbar
+Run:
 
-THide was used as an optional taskbar-hiding utility. It is not included here. Verify the original download source, read its instructions, and test how to restore the taskbar before enabling automatic hiding. Keep a recovery method available.
+    .\restore.ps1
+
+The script selects the newest backup and asks for confirmation. To choose a specific snapshot:
+
+    .\restore.ps1 -BackupPath "$env:USERPROFILE\Documents\LainOS-Backups\20261106-120000"
+
+Restore returns files that existed before setup. It does not uninstall applications or remove newly created config files that had no previous version.
+
+## 6. Optional taskbar hiding
+
+THide is not included, downloaded, or enabled by these scripts. It is a separate optional customization. Verify its original source and test its recovery method before using it.
 
 ## Troubleshooting
 
-- **Kitty wallpaper missing:** update the image path or remove the background image directives.
-- **YASB wallpaper gallery empty:** update the folder path and confirm it contains supported images.
-- **YASB widget error:** check the widget name/options against the current YASB documentation.
-- **GlazeWM shortcut does nothing:** confirm GlazeWM is running and check whether another application captured the same key.
-- **Font looks wrong:** install JetBrainsMono Nerd Font and restart Kitty.
+- **WinGet not found:** install or update App Installer from Microsoft Store.
+- **Kitty wallpaper missing:** place your own image at %USERPROFILE%\.config\kitty\lain-room.jpg and uncomment/update the background_image directive.
+- **YASB wallpaper gallery empty:** add supported images to %USERPROFILE%\Pictures\Wallpapers.
+- **YASB widget error:** check widget names and options against the current YASB documentation.
+- **GlazeWM shortcut does nothing:** confirm GlazeWM is running and check for conflicting hotkeys.
+- **Font looks wrong:** confirm JetBrainsMono Nerd Font is installed and restart the terminal.
+
+## Official project links
+
+- GlazeWM: https://github.com/glzr-io/glazewm
+- YASB: https://github.com/amnweb/yasb
+- YASB installation guide: https://docs.yasb.dev/latest/installation.html
+- Kitty: https://github.com/kovidgoyal/kitty
+- Fastfetch: https://github.com/fastfetch-cli/fastfetch
+- JetBrainsMono Nerd Font: https://www.nerdfonts.com/font-downloads
